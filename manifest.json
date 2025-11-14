@@ -1,0 +1,40 @@
+{
+  "name": "mi-plugin",
+  "version": "1.0.0",
+  "displayName": "Mi Plugin",
+  "description": "Descripción de tu plugin",
+  "author": "Tu Nombre",
+  "license": "MIT",
+  
+  "capabilities": {
+    "fieldTypes": [],
+    "actions": [],
+    "hooks": [],
+    "templates": [],
+    "integrations": [
+      {
+        "id": "mi-plugin",
+        "displayName": "Mi Plugin",
+        "description": "Descripción corta de lo que hace",
+        "icon": "🔌",
+        "category": "other",
+        "requiresAuth": false,
+        "configComponent": "components/MiConfig",
+        "capabilities": {
+          "sync": false,
+          "import": false,
+          "export": false,
+          "realtime": false
+        }
+      }
+    ]
+  },
+  
+  "permissions": [],
+  
+  "config": {
+    "required": [],
+    "optional": []
+  }
+}
+
