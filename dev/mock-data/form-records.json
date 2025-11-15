@@ -1,0 +1,55 @@
+[
+  {
+    "id": "form-record-example-1",
+    "name": "Registro de prueba 1",
+    "context": "form-record",
+    "formRecord": {
+      "id": 1,
+      "formId": 1,
+      "workspaceId": 1,
+      "data": {
+        "nombre": "Producto de prueba",
+        "cantidad": 5,
+        "precio": 1000,
+        "total": 5000
+      }
+    },
+    "form": {
+      "id": 1,
+      "name": "Formulario de Ejemplo",
+      "schema": {}
+    },
+    "userId": 1
+  },
+  {
+    "id": "form-record-example-2",
+    "name": "Factura de prueba - Monotributista",
+    "context": "form-record",
+    "formRecord": {
+      "id": 2,
+      "formId": 1,
+      "workspaceId": 1,
+      "documentId": 1,
+      "data": {
+        "tipoComprobante": 11,
+        "letraComprobante": "C",
+        "cuitEmisor": "20-30715114-6",
+        "razonSocialEmisor": "Empresa de Prueba",
+        "subtotal": 10000,
+        "ivaTotal": 2100,
+        "total": 12100,
+        "items": [
+          {
+            "descripcion": "Servicio de consultoría",
+            "cantidad": 1,
+            "precioUnitario": 10000,
+            "subtotal": 10000,
+            "iva": 2100
+          }
+        ]
+      }
+    },
+    "userId": 1
+  }
+]
+

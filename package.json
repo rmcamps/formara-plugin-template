@@ -10,7 +10,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@formara/plugin-sdk": "git+ssh://git@github.com:formara/formara-plugin-sdk.git",
+    "@formara/plugin-sdk": "git+https://github.com/rmcamps/formara-plugin-sdk.git",
     "express": "^4.18.0"
   },
   "devDependencies": {

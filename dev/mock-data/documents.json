@@ -1,0 +1,28 @@
+[
+  {
+    "id": "document-example-1",
+    "name": "Documento de prueba 1",
+    "context": "document",
+    "document": {
+      "id": 1,
+      "name": "factura-prueba.pdf",
+      "type": "upload",
+      "status": "processed",
+      "extractedData": {
+        "cliente": "Juan Pérez",
+        "total": 12100
+      },
+      "fields": {
+        "cliente": "Juan Pérez",
+        "cuit": "20-12345678-9",
+        "total": 12100
+      }
+    },
+    "userId": 1,
+    "workspace": {
+      "id": 1,
+      "name": "Mi Workspace"
+    }
+  }
+]
+
