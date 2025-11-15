@@ -69,3 +69,4 @@ import { api, useAuth, authHeaders, Input } from '@formara/plugin-sdk/frontend';
 
 Ver documentación completa en @formara/plugin-sdk
 
+

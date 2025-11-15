@@ -125,3 +125,4 @@ Ver documentación completa en:
 - `@formara/plugin-sdk/README.md` - API del SDK
 - `@formara/plugin-sdk/DEVELOPER_GUIDE.md` - Guía completa
 
+
