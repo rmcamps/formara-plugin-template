@@ -1,0 +1,26 @@
+{
+  "name": "PLUGIN_NAME",
+  "version": "1.0.0",
+  "displayName": "PLUGIN_NAME",
+  "description": "Plugin PLUGIN_NAME para Formara",
+  "author": "Formara",
+  "license": "proprietary",
+  
+  "capabilities": {
+    "fieldTypes": [],
+    "actions": [],
+    "hooks": [],
+    "templates": [],
+    "integrations": []
+  },
+  
+  "permissions": [
+    "documents:read",
+    "forms:read"
+  ],
+  
+  "config": {
+    "required": [],
+    "optional": []
+  }
+}

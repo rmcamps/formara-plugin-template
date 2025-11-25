@@ -1,0 +1,37 @@
+# Docker Compose para Plugin de Formara
+#
+# Provee PostgreSQL para desarrollo standalone del plugin
+#
+# Uso:
+#   docker-compose up -d     # Iniciar PostgreSQL
+#   docker-compose down      # Detener PostgreSQL
+#   docker-compose logs -f   # Ver logs
+
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: PLUGIN_NAME-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: PLUGIN_NAME_dev
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: dev
+    ports:
+      - "5433:5432"  # Puerto externo:interno (cambiar 5433 según PORT_REGISTRY.md)
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dev"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+    driver: local
+
+# Configuración en .env del backend:
+# DATABASE_URL=postgresql://dev:dev@localhost:5433/PLUGIN_NAME_dev
+

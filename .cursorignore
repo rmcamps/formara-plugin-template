@@ -1,0 +1,6 @@
+# Estos son templates que se copian a los plugins
+# No son archivos ejecutables directamente
+# No mostrar errores de linter en estos archivos
+
+*
+

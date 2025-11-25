@@ -1,0 +1,46 @@
+{
+  "tipoComprobante": "FACTURA_A",
+  "letraComprobante": "A",
+  "conceptoComprobante": 2,
+  "puntoVenta": 1,
+  "fechaComprobante": "20251116",
+  "emisor_cuit": "30715114638",
+  "emisor_razon_social": "FLEXA SOFTWARE SRL",
+  "emisor_domicilio": "POSADAS 1415 Piso:7 Dpto:A",
+  "emisor_condicion_iva": "RESPONSABLE_INSCRIPTO",
+  "emisor_inicio_actividades": "2020-01-15",
+  "cliente_documento_tipo": "CUIT",
+  "cliente_documento_numero": "30708422130",
+  "clienteDocTipo": 80,
+  "clienteDocNro": "30708422130",
+  "cliente_razon_social": "INTECONS SA",
+  "cliente_domicilio": "Av. Corrientes 1234, CABA",
+  "cliente_condicion_iva": "RESPONSABLE_INSCRIPTO",
+  "items": [
+    {
+      "codigo": "SERV001",
+      "descripcion": "Servicios de computación",
+      "cantidad": 1,
+      "unidad": "mes",
+      "precio_unitario": 100,
+      "precioUnitario": 100,
+      "alicuota_iva": 21,
+      "iva": 21,
+      "importe_iva": 21,
+      "importe_total": 121
+    }
+  ],
+  "subtotal": 100,
+  "iva_total": 21,
+  "ivaTotal": 21,
+  "total": 121,
+  "importeTotal": 121,
+  "observaciones": "Servicios de computación mes noviembre 2025",
+  "concepto": "SERVICIOS",
+  "moneda": "PES",
+  "fechaServicioDesde": "20251101",
+  "fechaServicioHasta": "20251130",
+  "fechaVencimientoPago": "20251130",
+  "fechaVtoPago": "20251130"
+}
+

@@ -1,0 +1,63 @@
+// Schema de Prisma para Plugin PLUGIN_NAME
+// 
+// Este schema define TODOS los modelos necesarios para el plugin:
+// - Modelos del CORE que el plugin necesita leer (se marcan con comentario)
+// - Modelos NUEVOS del plugin (se agregarán al core al hacer merge)
+//
+// En desarrollo standalone: Este schema se usa tal cual
+// En producción integrada: Solo los modelos NUEVOS se agregan al core
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  // Opción A: PostgreSQL del core (recomendado para monorepo)
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  
+  // Opción B: SQLite local (para standalone sin acceso al core)
+  // provider = "sqlite"
+  // url      = env("DATABASE_URL")
+}
+
+// ========================================
+// MODELOS DEL CORE
+// ⚠️ Solo para desarrollo standalone con SQLite
+// Si usas PostgreSQL del core, estos ya existen
+// ========================================
+
+model Workspace {
+  id        Int      @id @default(autoincrement())
+  name      String
+  slug      String?  @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id          Int      @id @default(autoincrement())
+  email       String   @unique
+  name        String?
+  workspaceId Int
+  role        String   @default("member")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ========================================
+// MODELOS DEL PLUGIN
+// ✅ Estos modelos son NUEVOS
+// Se agregarán al schema del core al hacer merge
+// ========================================
+
+// TODO: Agregar modelos específicos del plugin aquí
+model PluginPLUGIN_NAMEData {
+  id          Int      @id @default(autoincrement())
+  workspaceId Int
+  data        Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([workspaceId])
+}
