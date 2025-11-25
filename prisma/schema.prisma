@@ -1,4 +1,4 @@
-// Schema de Prisma para Plugin PLUGIN_NAME
+// Schema de Prisma para Plugin Template
 // 
 // Este schema define TODOS los modelos necesarios para el plugin:
 // - Modelos del CORE que el plugin necesita leer (se marcan con comentario)
@@ -12,19 +12,25 @@ generator client {
 }
 
 datasource db {
-  // Opción A: PostgreSQL del core (recomendado para monorepo)
+  // Siempre usar PostgreSQL (NO SQLite)
+  // 
+  // MODO STANDALONE (desarrollo del plugin solo):
+  //   - Arrancar: docker-compose up -d (PostgreSQL en puerto 5433)
+  //   - DATABASE_URL: postgresql://formara:formara_dev@localhost:5433/PLUGIN_NAME_plugin?schema=public
+  //   - Usa schema 'public' en base 'PLUGIN_NAME_plugin'
+  //
+  // MODO INTEGRADO (desarrollo con Formara core):
+  //   - NO arrancar docker-compose del plugin
+  //   - DATABASE_URL: postgresql://formara:flexa123difficult@localhost:5432/formara?schema=public
+  //   - Los modelos del plugin se mergean al core y se crean en schema 'public' de la base 'formara'
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  
-  // Opción B: SQLite local (para standalone sin acceso al core)
-  // provider = "sqlite"
-  // url      = env("DATABASE_URL")
 }
 
 // ========================================
 // MODELOS DEL CORE
-// ⚠️ Solo para desarrollo standalone con SQLite
-// Si usas PostgreSQL del core, estos ya existen
+// ⚠️ Solo para desarrollo standalone
+// El core ya tiene estos modelos y los descartará al importar
 // ========================================
 
 model Workspace {
@@ -45,19 +51,44 @@ model User {
   updatedAt   DateTime @updatedAt
 }
 
+model Document {
+  id          Int      @id @default(autoincrement())
+  filename    String
+  workspaceId Int
+  userId      Int?
+  status      String   @default("pending")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PluginActionLog {
+  id         Int      @id @default(autoincrement())
+  pluginName String
+  actionId   String
+  context    Json
+  result     Json
+  success    Boolean
+  createdAt  DateTime @default(now())
+  
+  @@index([pluginName, actionId])
+  @@index([createdAt])
+}
+
 // ========================================
 // MODELOS DEL PLUGIN
 // ✅ Estos modelos son NUEVOS
 // Se agregarán al schema del core al hacer merge
 // ========================================
 
-// TODO: Agregar modelos específicos del plugin aquí
-model PluginPLUGIN_NAMEData {
+// Ejemplo de modelo del plugin (reemplazar con tus modelos)
+model PluginTemplateExample {
   id          Int      @id @default(autoincrement())
   workspaceId Int
-  data        Json
+  name        String
+  data        Json?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  
+
   @@index([workspaceId])
+  @@map("plugin_template_example")
 }

@@ -1,35 +1,20 @@
 /**
  * Dev Environment para Plugin Template
- * 
- * Este es un plugin de ejemplo que muestra cómo crear un nuevo plugin
- * Usa el DevApp del SDK con todas las funcionalidades
  */
 
 import { createRoot } from 'react-dom/client';
+import '@formara/plugin-sdk/sdk-styles.css';
 import './dev-style.css';
 import { DevApp } from '@formara/plugin-sdk/sandbox/frontend';
+import { processMockups } from '@formara/plugin-sdk/sandbox/frontend/mockup-loader';
 import manifest from '../manifest.json';
+import { fieldTypes, cards } from './index';
 
-// Backend URL del plugin
-const BACKEND_URL = ((import.meta as any).env?.VITE_BACKEND_URL || 'http://localhost:4001') as string;
+const BACKEND_URL = ((import.meta as any).env?.VITE_BACKEND_URL || 'http://localhost:4002') as string;
 
-// Cargar mockups dinámicamente desde ./src/mockups/*.json
-const mockupModules = import.meta.glob('./src/mockups/*.json', { eager: true }) as Record<string, { default: any }>;
-const mockups: Record<string, { label: string; data: any }> = {};
-for (const [path, module] of Object.entries(mockupModules)) {
-  const fileName = path.split('/').pop()?.replace('.json', '') || '';
-  const label = fileName
-    .split('-')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
-  mockups[fileName] = { label, data: module.default };
-}
-
-// Field Types disponibles (ejemplo - reemplazar con tus propios field types)
-const fieldTypes: any[] = [];
-
-// Componentes de configuración de integrations (ejemplo - reemplazar con tus propios)
-const integrationComponents: Record<string, React.ComponentType<any>> = {};
+// Cargar mockups dinámicamente
+const mockupModules = import.meta.glob('./mockups/*.json', { eager: true }) as Record<string, { default: any }>;
+const mockups = processMockups(mockupModules);
 
 // Mount the app
 const root = document.getElementById('root');
@@ -41,11 +26,13 @@ if (root) {
       version={manifest.version}
       description={manifest.description}
       fieldTypes={fieldTypes}
-      actions={manifest.capabilities.actions || []}
-      integrations={manifest.capabilities.integrations || []}
+      actions={manifest.capabilities?.actions || []}
+      hooks={manifest.capabilities?.hooks || []}
+      schemas={[]}
+      templates={manifest.capabilities?.templates || []}
+      cards={cards}
       mockups={mockups}
       backendUrl={BACKEND_URL}
-      integrationComponents={integrationComponents}
     />
   );
 }

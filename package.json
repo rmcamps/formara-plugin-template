@@ -1,0 +1,33 @@
+{
+  "name": "@formara/plugin-PLUGIN_NAME",
+  "version": "1.0.0",
+  "description": "Plugin PLUGIN_NAME para Formara",
+  "main": "backend/routes.ts",
+  "module": "frontend/index.ts",
+  "author": "Formara",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "postinstall": "cd backend && npm install && cd ../frontend && npm install",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "npm run build:backend && npm run build:frontend",
+    "build:backend": "cd backend && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "test": "echo 'Tests not implemented yet'"
+  },
+  "keywords": [
+    "formara",
+    "plugin"
+  ],
+  "devDependencies": {
+    "concurrently": "^8.0.0",
+    "prisma": "^6.19.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.0"
+  }
+}

@@ -1,37 +1,32 @@
-# Docker Compose para Plugin de Formara
-#
-# Provee PostgreSQL para desarrollo standalone del plugin
+
+# Docker Compose para Plugin Template Standalone
+# 
+# IMPORTANTE: Solo usar cuando desarrollas el plugin de forma independiente
+# Si el plugin está integrado en Formara core, NO arrancar este docker-compose
+# y usar la DATABASE_URL del core en .env
 #
 # Uso:
-#   docker-compose up -d     # Iniciar PostgreSQL
-#   docker-compose down      # Detener PostgreSQL
-#   docker-compose logs -f   # Ver logs
-
-version: '3.8'
+#   docker-compose up -d    # Arrancar PostgreSQL del plugin
+#   docker-compose down     # Detener PostgreSQL del plugin
 
 services:
   db:
-    image: postgres:16-alpine
-    container_name: PLUGIN_NAME-db
+    image: postgres:16
+    container_name: PLUGIN_NAME_plugin_db
     restart: unless-stopped
     environment:
-      POSTGRES_DB: PLUGIN_NAME_dev
-      POSTGRES_USER: dev
-      POSTGRES_PASSWORD: dev
-    ports:
-      - "5433:5432"  # Puerto externo:interno (cambiar 5433 según PORT_REGISTRY.md)
+      POSTGRES_USER: formara
+      POSTGRES_PASSWORD: formara_dev
+      POSTGRES_DB: PLUGIN_NAME_plugin
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - PLUGIN_NAME_db_data:/var/lib/postgresql/data
+    ports:
+      - "5435:5432"  # Puerto 5434 para el template (5433 está ocupado por arca)
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U dev"]
+      test: ["CMD-SHELL", "pg_isready -U formara -d PLUGIN_NAME_plugin"]
       interval: 10s
       timeout: 5s
       retries: 5
 
 volumes:
-  postgres_data:
-    driver: local
-
-# Configuración en .env del backend:
-# DATABASE_URL=postgresql://dev:dev@localhost:5433/PLUGIN_NAME_dev
-
+  PLUGIN_NAME_db_data:

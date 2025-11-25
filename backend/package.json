@@ -2,29 +2,30 @@
   "name": "@formara/plugin-PLUGIN_NAME-backend",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "Backend for PLUGIN_NAME plugin",
   "scripts": {
-    "dev": "ts-node --transpileOnly dev-server.ts",
+    "dev": "OPENSSL_CONF=/etc/ssl/openssl.cnf npx tsx dev-server.ts",
     "build": "tsc",
-    "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev",
-    "db:push": "prisma db push",
-    "db:seed": "ts-node ../prisma/seed.ts",
+    "db:generate": "prisma generate --schema=../prisma/schema.prisma",
+    "db:migrate": "prisma migrate dev --schema=../prisma/schema.prisma",
+    "db:push": "prisma db push --schema=../prisma/schema.prisma",
+    "db:seed": "npx tsx ../prisma/seed.ts",
     "setup:core": "bash ../scripts/setup-core.sh"
   },
   "dependencies": {
-    "@prisma/client": "^6.8.2",
+    "@prisma/client": "^6.19.0",
     "axios": "^1.9.0",
     "cors": "^2.8.5",
     "express": "^5.1.0"
   },
   "devDependencies": {
+    "@formara/plugin-sdk": "file:../../../plugin-sdk",
     "@types/cors": "^2.8.18",
     "@types/express": "^5.0.2",
     "@types/node": "^24.5.2",
-    "prisma": "^6.8.2",
-    "ts-node": "^10.9.2",
+    "prisma": "^6.19.0",
+    "tsx": "^4.20.6",
     "typescript": "^5.8.3"
   }
 }
-

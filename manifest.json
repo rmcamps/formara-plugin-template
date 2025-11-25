@@ -5,20 +5,79 @@
   "description": "Plugin PLUGIN_NAME para Formara",
   "author": "Formara",
   "license": "proprietary",
-  
   "capabilities": {
-    "fieldTypes": [],
-    "actions": [],
-    "hooks": [],
+    "fieldTypes": [
+      {
+        "id": "dummy-field",
+        "label": "Campo Dummy",
+        "category": "specialized",
+        "description": "Un campo de ejemplo para el plugin template"
+      }
+    ],
+    "actions": [
+      {
+        "id": "dummy-action",
+        "label": "Acción Dummy",
+        "description": "Ejemplo de acción para el plugin template",
+        "contexts": [
+          "document",
+          "form-record"
+        ]
+      }
+    ],
+    "hooks": [
+      {
+        "id": "dummy-file-processed",
+        "event": "file.processed",
+        "priority": 50
+      },
+      {
+        "id": "dummy-form-record-created",
+        "event": "form.record.created",
+        "priority": 50
+      },
+      {
+        "id": "dummy-form-record-updated",
+        "event": "form.record.updated",
+        "priority": 50
+      }
+    ],
     "templates": [],
-    "integrations": []
+    "cards": [
+      {
+        "id": "dummy-generate",
+        "location": "generate",
+        "displayName": "Generar Dummy",
+        "description": "Ejemplo de generate para el plugin template",
+        "category": "document"
+      },
+      {
+        "id": "dummy-distribute",
+        "location": "distribute",
+        "displayName": "Distribuir Dummy",
+        "description": "Ejemplo de distribute para el plugin template",
+        "category": "email"
+      },
+      {
+        "id": "dummy-automations",
+        "location": "automations",
+        "displayName": "Automatización Dummy",
+        "description": "Ejemplo de automation para el plugin template",
+        "category": "automation"
+      },
+      {
+        "id": "dummy-integration",
+        "location": "integrations",
+        "displayName": "Integración Dummy",
+        "description": "Ejemplo de integración para el plugin template",
+        "category": "other"
+      }
+    ]
   },
-  
   "permissions": [
     "documents:read",
     "forms:read"
   ],
-  
   "config": {
     "required": [],
     "optional": []

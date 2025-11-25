@@ -1,118 +1,148 @@
-# 🎨 Template de Plugin para Formara
+# Plugin Template para Formara
 
-Este es el **template base** para crear nuevos plugins de Formara.
+Este es el template base para crear nuevos plugins en Formara.
 
-## ⚠️ Importante
-
-Este directorio **NO es un plugin** ejecutable. Es un template que se copia al crear plugins nuevos.
-
-## 📁 Estructura
+## Estructura
 
 ```
 template/
-├── manifest.json             # Metadata del plugin
-├── README.md                 # Documentación
-├── .env.example              # Variables de entorno
-├── .cursorignore             # Evitar errores en IDE
-├── ecosystem.config.js       # Config PM2
-├── docker-compose.yml        # Config Docker
-├── frontend/                 # UI del plugin
-│   ├── dev.tsx              # Sandbox visual
-│   ├── dev.html             # HTML del sandbox
-│   ├── package.json         # Dependencias frontend
-│   └── vite.config.ts       # Config Vite
-├── backend/                 # API del plugin
-│   ├── dev-server.ts        # Express standalone
-│   ├── routes.ts            # Rutas HTTP
-│   ├── package.json         # Dependencias backend
-│   ├── .env.example         # Variables backend
-│   ├── tsconfig.json        # Config TypeScript
-│   └── services/
-│       └── prisma.local.ts  # Prisma client local
-├── prisma/                  # Database
-│   ├── schema.prisma        # Schema completo
-│   └── seed.ts              # Datos de prueba
-├── core/                    # Archivos compartidos
-│   └── types/               # Contratos TypeScript
-│       ├── plugin-contracts.ts        # Frontend
-│       └── plugin-backend-contracts.ts # Backend
-├── docprocessor/            # Procesamiento de docs (opcional)
-│   └── normalize.py
-└── scripts/
-    └── setup-core.sh        # Setup automático
+├── manifest.json          # Definición del plugin
+├── package.json           # Scripts y dependencias raíz
+├── frontend/              # Frontend del plugin
+│   ├── index.ts          # Exportaciones del plugin
+│   ├── field-types/      # Field types personalizados
+│   ├── components/       # Componentes de configuración
+│   └── dev.tsx           # Sandbox de desarrollo
+├── backend/              # Backend del plugin
+│   ├── routes.ts         # Endpoints del plugin
+│   ├── actions.ts        # Actions del plugin
+│   └── dev-server.ts     # Servidor standalone
+└── prisma/               # Schema de base de datos
+    └── schema.prisma
 ```
 
-## 🚀 Cómo Usar
-
-### Crear Nuevo Plugin
+## Instalación
 
 ```bash
-cd formara
-./scripts/create-plugin.sh mi-plugin 5189 4008 5440
-
-# Genera plugins/mi-plugin/ con toda esta estructura
+# Instalar dependencias (raíz, backend y frontend)
+npm install
 ```
 
-### Copiar Manualmente
+## Desarrollo
 
 ```bash
-cp -r plugins/template plugins/mi-plugin
+# Iniciar backend y frontend en modo desarrollo
+npm run dev
 
-# Personalizar:
-# - manifest.json (nombre, description)
-# - Puertos en vite.config.ts, .env, docker-compose.yml
-# - backend/routes.ts (implementar rutas)
-# - prisma/schema.prisma (agregar modelos)
+# Solo backend
+npm run dev:backend
+
+# Solo frontend
+npm run dev:frontend
 ```
 
-## 🎯 Archivos con Placeholders
+## Puertos
 
-Estos archivos tienen placeholders que se reemplazan al crear un plugin:
+- **Frontend**: http://localhost:4001
+- **Backend**: http://localhost:4002
 
-- `manifest.json` → `PLUGIN_NAME`
-- `ecosystem.config.js` → `PLUGIN_NAME`, `BACKEND_PORT`, `FRONTEND_PORT`
-- `docker-compose.yml` → `PLUGIN_NAME`, `DB_PORT`
-- `dev.html` → `{{PLUGIN_NAME}}`
-- `backend/dev-server.ts` → `PLUGIN_NAME`
-- `backend/package.json` → `PLUGIN_NAME`
-- `prisma/schema.prisma` → `PLUGIN_NAME`
+## Componentes Incluidos
 
-## 📖 Documentación
+Este template incluye ejemplos de:
 
-Ver los siguientes archivos en la raíz del proyecto:
+- ✅ **Field Type**: `dummy-field` - Campo de ejemplo
+- ✅ **Action**: `dummy-action` - Acción de ejemplo
+- ✅ **Integration**: `dummy-integration` - Integración de ejemplo
+- ✅ **Generate**: `dummy-generate` - Generate de ejemplo
+- ✅ **Distribute**: `dummy-distribute` - Distribute de ejemplo
 
-- `PLUGIN_DEVELOPER_GUIDE.md` - Guía completa
-- `FINAL_PLUGIN_ARCHITECTURE.md` - Arquitectura
-- `ARQUITECTURA_PLUGINS_RESUMEN_VISUAL.md` - Resumen visual
-- `plugins/PORT_REGISTRY.md` - Puertos asignados
+## Uso
 
-## ✨ Características del Template
+1. Copia este template: `cp -r plugins/template plugins/mi-plugin`
+2. Reemplaza `PLUGIN_NAME` con el nombre de tu plugin
+3. Personaliza los componentes según tus necesidades
+4. Ejecuta `npm run dev` para probar
 
-### Frontend
-- ✅ Sandbox visual (dev.tsx)
-- ✅ Vite configurado
-- ✅ React 19 + Tailwind 4
-- ✅ shadcn/ui components
+## Más Información
 
-### Backend
-- ✅ Express standalone
-- ✅ Mock de autenticación
-- ✅ Prisma local
-- ✅ CORS configurado
-- ✅ TypeScript
+Ver la documentación en `plugins/CREATE_PLUGIN_GUIDE.md`
 
-### Base de Datos
-- ✅ Schema completo (core + plugin)
-- ✅ Seed con datos de prueba
-- ✅ Soporte SQLite y PostgreSQL
+## Base de Datos
 
-### DevOps
-- ✅ PM2 config
-- ✅ Docker Compose
-- ✅ Dockerfiles de desarrollo
-- ✅ Scripts de setup automático
+### Modo Standalone (Desarrollo del Plugin)
 
----
+1. **Iniciar PostgreSQL local:**
+   ```bash
+   docker-compose up -d
+   ```
 
-**Template Versión:** 2.0.0  
-**Última Actualización:** 16 de noviembre, 2025
+2. **Configurar DATABASE_URL:**
+   ```bash
+   cp .env.example backend/.env
+   # Editar backend/.env y configurar:
+   # DATABASE_URL=postgresql://formara:formara_dev@localhost:5435/PLUGIN_NAME_plugin?schema=public
+   ```
+
+3. **Generar Prisma Client:**
+   ```bash
+   cd backend
+   npm run db:generate
+   ```
+
+4. **Ejecutar migraciones:**
+   ```bash
+   npm run db:migrate
+   # O para desarrollo rápido:
+   npm run db:push
+   ```
+
+### Modo Integrado (Desarrollo con Core)
+
+1. **NO arrancar docker-compose del plugin**
+2. **Usar DATABASE_URL del core:**
+   ```bash
+   # DATABASE_URL=postgresql://formara:flexa123difficult@localhost:5432/formara?schema=public
+   ```
+3. El Prisma adapter detectará automáticamente el modo integrado y usará el Prisma compartido del core.
+
+## Estructura de Prisma
+
+- `prisma/schema.prisma`: Schema completo (modelos del core + modelos del plugin)
+- `backend/services/prisma.adapter.ts`: Adapter que detecta automáticamente el modo (standalone/integrado)
+
+El adapter funciona automáticamente:
+- **Standalone**: Usa Prisma local con PostgreSQL en puerto 5435
+- **Integrado**: Usa Prisma compartido del core con PostgreSQL en puerto 5432
+
+## Hooks
+
+El template incluye ejemplos de hooks que responden a eventos del sistema:
+
+### Hooks Disponibles
+
+1. **`dummy-file-processed`** (`file.processed`)
+   - Se ejecuta cuando un archivo es procesado con IA
+   - Ejemplo: Cuenta campos extraídos del archivo
+
+2. **`dummy-form-record-created`** (`form.record.created`)
+   - Se ejecuta cuando se crea un nuevo registro de formulario
+   - Ejemplo: Cuenta campos con datos en el registro
+
+3. **`dummy-form-record-updated`** (`form.record.updated`)
+   - Se ejecuta cuando se actualiza un registro de formulario
+   - Ejemplo: Detecta qué campos cambiaron
+
+### Archivo de Hooks
+
+Los hooks están definidos en `backend/hooks.ts` y deben exportar un array de `Omit<HookDefinition, 'pluginName'>[]`.
+
+Los hooks también deben estar declarados en `manifest.json` en `capabilities.hooks`.
+
+### Eventos Disponibles
+
+Ver `core/hooks/types.ts` para la lista completa de eventos disponibles:
+- `file.uploaded`, `file.processed`, `file.validated`
+- `form.record.created`, `form.record.updated`, `form.record.deleted`
+- `document.generated`, `document.sent`
+- Y más...
+
