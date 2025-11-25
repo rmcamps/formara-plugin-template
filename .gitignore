@@ -1,0 +1,70 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build outputs
+dist/
+build/
+*.tsbuildinfo
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Database
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+prisma/migrations/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# Archives (pesados)
+*.rar
+*.zip
+*.tar
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.7z
+*.gz
+*.bz2
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+uploads/
+
+# Secrets
+*.pem
+*.key
+*.crt
+*-key.json
+*-credentials.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Core types (symlinks en monorepo, copiados en standalone)
+core/types/*
+!core/.gitkeep
+dumps/
+dump/
