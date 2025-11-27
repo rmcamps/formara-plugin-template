@@ -11,12 +11,6 @@
 import { PrismaClient } from '@prisma/client';
 import * as path from 'path';
 import * as fs from 'fs';
-import { createRequire } from 'module';
-import { fileURLToPath } from 'url';
-
-// Crear require usando la ruta del archivo actual
-const __filename = fileURLToPath(import.meta.url);
-const require = createRequire(__filename);
 
 let prismaInstance: PrismaClient | null = null;
 
@@ -42,7 +36,7 @@ function isStandaloneMode(): boolean {
 /**
  * Obtener Prisma Client según el contexto
  */
-export function getPrismaClient(): PrismaClient {
+export async function getPrismaClient(): Promise<PrismaClient> {
   if (prismaInstance) {
     return prismaInstance;
   }
@@ -77,8 +71,8 @@ export function getPrismaClient(): PrismaClient {
       }
       console.log('[Prisma] Intentando importar desde:', sharedPrismaPath);
       
-      // Usar createRequire para importar en ES Modules
-      const sharedPrismaModule = require(sharedPrismaPath);
+      // Usar import dinámico en lugar de require
+      const sharedPrismaModule = await import(sharedPrismaPath);
       console.log('[Prisma] Módulo prisma.shared importado, keys:', Object.keys(sharedPrismaModule));
       
       const sharedPrisma = sharedPrismaModule.sharedPrisma || sharedPrismaModule.default;
@@ -100,9 +94,9 @@ export function getPrismaClient(): PrismaClient {
   return prismaInstance;
 }
 
-// Export por defecto para compatibilidad
-// Llamar getPrismaClient() asegura que nunca sea null
-export const sharedPrisma = getPrismaClient();
+// Inicializar Prisma usando top-level await (ES modules)
+// Esto permite que el módulo se inicialice de forma asíncrona
+const sharedPrisma = await getPrismaClient();
 
-// Export named
-export { sharedPrisma as prisma };
+// Export por defecto
+export { sharedPrisma, sharedPrisma as prisma };
