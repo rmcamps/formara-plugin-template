@@ -20,10 +20,10 @@
     "express": "^5.1.0"
   },
   "devDependencies": {
-    "@formara/plugin-sdk": "file:../../../plugin-sdk",
+    "@formara/plugin-sdk": "^1.0.1",
     "@types/cors": "^2.8.18",
     "@types/express": "^5.0.2",
-    "@types/node": "^24.5.2",
+    "@types/node": "^20.0.0",
     "prisma": "^6.19.0",
     "tsx": "^4.20.6",
     "typescript": "^5.8.3"

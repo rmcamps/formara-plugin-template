@@ -14,9 +14,9 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
-    "@formara/plugin-sdk": "file:../../../plugin-sdk",
+    "@formara/plugin-sdk": "^1.0.0",
     "@tailwindcss/postcss": "^4.1.17",
-    "@types/node": "^24.5.2",
+    "@types/node": "^20.0.0",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.0.0",
