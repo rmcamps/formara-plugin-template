@@ -1,4 +1,4 @@
-import { defineConfig, Plugin, type AliasOptions } from 'vite'
+import { defineConfig, type Plugin, type AliasOptions } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 import { getPluginViteConfig } from '@formara/plugin-sdk/utils/vite-config'

@@ -51,7 +51,7 @@ model User {
   updatedAt   DateTime @updatedAt
 }
 
-model Document {
+model Record {
   id          Int      @id @default(autoincrement())
   filename    String
   workspaceId Int

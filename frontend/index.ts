@@ -3,6 +3,9 @@ import DummyIntegrationConfig from './components/DummyIntegrationConfig';
 import DummyGenerateConfig from './components/DummyGenerateConfig';
 import DummyDistributeConfig from './components/DummyDistributeConfig';
 
+// Componentes UI de Actions
+export { ExampleAction } from './components/ExampleAction';
+
 export const fieldTypes = [DummyFieldType];
 
 /**

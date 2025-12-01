@@ -114,6 +114,112 @@ El adapter funciona automáticamente:
 - **Standalone**: Usa Prisma local con PostgreSQL en puerto 5435
 - **Integrado**: Usa Prisma compartido del core con PostgreSQL en puerto 5432
 
+## Actions
+
+Los actions son botones/comandos ejecutables que aparecen en diferentes contextos de la UI.
+
+### Tipos de Actions
+
+#### 1. Action Simple (sin UI)
+
+Se ejecuta directamente al hacer clic:
+
+```typescript
+// backend/actions.ts
+{
+  id: 'mi-action-simple',
+  pluginName: 'mi-plugin',
+  label: 'Acción Simple',
+  icon: '⚡',
+  description: 'Descripción detallada de lo que hace esta acción',
+  contexts: ['form-record'],
+  
+  handler: async (data) => {
+    // Lógica de la acción
+    return { success: true, message: 'Completado' };
+  }
+}
+```
+
+#### 2. Action con UI (configuración interactiva)
+
+Muestra un modal para que el usuario configure parámetros:
+
+```typescript
+// backend/actions.ts
+{
+  id: 'mi-action-con-ui',
+  pluginName: 'mi-plugin',
+  label: 'Acción con UI',
+  icon: '🎨',
+  description: 'Descripción detallada. Esta acción muestra UI para configurar opciones...',
+  contexts: ['form-record'],
+  
+  hasUI: true,                    // ← Indica que tiene UI
+  uiComponent: 'MiAction',        // ← Nombre del componente (sin .tsx)
+  
+  handler: async (data, params) => {
+    // params contiene lo configurado por el usuario
+    const { opcion1, opcion2 } = params;
+    // Lógica usando los parámetros
+    return { success: true, message: 'Completado' };
+  }
+}
+```
+
+```tsx
+// frontend/components/MiAction.tsx
+import { ActionUIProps, useActionRecords } from '@/core/actions/ActionUIBase';
+
+export function MiAction({ context, onExecute, onCancel }: ActionUIProps) {
+  const records = useActionRecords(context);
+  const [opcion1, setOpcion1] = useState('');
+  
+  return (
+    <div className="p-6">
+      <h2>Configurar Mi Action</h2>
+      <input value={opcion1} onChange={e => setOpcion1(e.target.value)} />
+      <button onClick={() => onExecute({ opcion1 })}>Ejecutar</button>
+      <button onClick={onCancel}>Cancelar</button>
+    </div>
+  );
+}
+```
+
+```typescript
+// frontend/index.ts
+export { MiAction } from './components/MiAction';
+```
+
+### Convenciones para Actions con UI
+
+1. **Nombre del componente**: SIEMPRE termina en `Action.tsx` (ej: `GenerateDocumentAction.tsx`, `SendEmailAction.tsx`)
+2. **Implementar `ActionUIProps`**: Recibe `context`, `onExecute`, `onCancel`
+3. **Exportar en `index.ts`**: Para que el core pueda cargarlo
+4. **Validación en el UI**: El componente valida parámetros antes de llamar `onExecute`
+
+### Helpers Disponibles
+
+```typescript
+import {
+  ActionUIProps,
+  useActionRecords,      // Extrae registros (siempre array)
+  useActionDocuments,    // Extrae documentos (siempre array)
+  isBatchOperation,      // true si es operación múltiple
+  getItemCount,          // Cantidad de items
+  getContextType,        // Tipo de contexto
+} from '@/core/actions/ActionUIBase';
+```
+
+### Ejemplo Completo
+
+Ver `frontend/components/ExampleAction.tsx` para un ejemplo completo con:
+- Múltiples tipos de inputs (texto, checkbox, select)
+- Validación de parámetros
+- Preview de datos
+- Soporte para batch
+- Manejo de errores
+
 ## Hooks
 
 El template incluye ejemplos de hooks que responden a eventos del sistema:
